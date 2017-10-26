@@ -18,9 +18,9 @@ echo -e "$RESET"
 echo -e "$OKORANGE + -- --=[http://crowdshield.com$RESET"
 echo ""
 
-INSTALL_DIR=/usr/share/sniper
-LOOT_DIR=/usr/share/sniper/loot
-PLUGINS_DIR=/usr/share/sniper/plugins
+INSTALL_DIR=/usr/local/sniper
+LOOT_DIR=/usr/local/sniper/loot
+PLUGINS_DIR=/usr/local/sniper/plugins
 
 echo -e "$OKGREEN + -- --=[This script will install sniper under $INSTALL_DIR. Are you sure you want to continue?$RESET"
 read answer 
@@ -64,9 +64,9 @@ git clone https://github.com/nccgroup/shocker.git
 git clone https://github.com/drwetter/testssl.sh.git 
 git clone https://github.com/lunarca/SimpleEmailSpoofer 
 git clone https://github.com/arthepsy/ssh-audit 
-wget https://svn.nmap.org/nmap/scripts/http-vuln-cve2017-5638.nse -O /usr/share/nmap/scripts/http-vuln-cve2017-5638.nse
-wget https://raw.githubusercontent.com/xorrbit/nmap/865142904566e416944ebd6870d496c730934965/scripts/http-vuln-INTEL-SA-00075.nse -O /usr/share/nmap/scripts/http-vuln-INTEL-SA-00075.nse
-cp $INSTALL_DIR/bin/iis-buffer-overflow.nse /usr/share/nmap/scripts/iis-buffer-overflow.nse
+wget https://svn.nmap.org/nmap/scripts/http-vuln-cve2017-5638.nse -O /usr/local/nmap/scripts/http-vuln-cve2017-5638.nse
+wget https://raw.githubusercontent.com/xorrbit/nmap/865142904566e416944ebd6870d496c730934965/scripts/http-vuln-INTEL-SA-00075.nse -O /usr/local/nmap/scripts/http-vuln-INTEL-SA-00075.nse
+cp $INSTALL_DIR/bin/iis-buffer-overflow.nse /usr/local/nmap/scripts/iis-buffer-overflow.nse
 echo -e "$OKORANGE + -- --=[Setting up environment...$RESET"
 cd $PLUGINS_DIR/Findsploit/ && bash install.sh
 cd $PLUGINS_DIR/BruteX/ && bash install.sh
@@ -77,7 +77,7 @@ mkdir $LOOT_DIR/nmap -p 2> /dev/null
 mkdir $LOOT_DIR/domains -p 2> /dev/null
 mkdir $LOOT_DIR/output -p 2> /dev/null
 mkdir $LOOT_DIR/reports -p 2> /dev/null
-cp -f $INSTALL_DIR/bin/clamav-exec.nse /usr/share/nmap/scripts/ 2> /dev/null
+cp -f $INSTALL_DIR/bin/clamav-exec.nse /usr/local/nmap/scripts/ 2> /dev/null
 chmod +x $INSTALL_DIR/sniper
 chmod +x $INSTALL_DIR/bin/dnsdict6
 chmod +x $PLUGINS_DIR/Goohak/goohak

@@ -13,7 +13,7 @@ fi
 
 if [ "$2" == "" ]
 	then
-		WORDLIST="/usr/share/metasploit-framework/data/wordlists/unix_users.txt"
+		WORDLIST="/usr/local/metasploit-framework/data/wordlists/unix_users.txt"
 	else
 		WORDLIST="$2"
 fi
