@@ -1120,7 +1120,7 @@ function __info() {
   googleinurl@inurlbr:~$ which php 
   /usr/bin/php 
   googleinurl@inurlbr:~/cli$ whereis php 
-  php: /usr/bin/php /usr/share/php /usr/share/man/man1/php.1.gz 
+  php: /usr/bin/php /usr/local/php /usr/local/man/man1/php.1.gz 
   googleinurl@inurlbr:~/cli$ type -a php 
   php is /usr/bin/php
 

@@ -91,7 +91,7 @@
 * v1.8c - Fixed install.sh permission issue
 * v1.8c - Fixed install.sh cleanup options
 * v1.8c - Added ssh-audit
-* v1.8c - Added install directory (/usr/share/sniper/) to install script for universal access
+* v1.8c - Added install directory (/usr/local/sniper/) to install script for universal access
 * v1.8c - Fixed issue with Metasploit SSH scans
 * v1.8c - Added auto-update to install.sh to automatically pull latest github release
 * v1.8b - Fixed bug with NMap UDP scan options
